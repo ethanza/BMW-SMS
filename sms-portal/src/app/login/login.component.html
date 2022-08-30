@@ -1,0 +1,23 @@
+<div class="login">
+    <div class="login-container" *ngIf="!isAuthenticated">
+        <div class="loginModal">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+         
+                <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()" [formControl]="usernameControl">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" matInput placeholder="username">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" [floatLabel]="getFloatLabelValue()" [formControl]="passwordControl"> 
+                    <label for="password">Password</label>
+                    <input id="password" type="password" matInput placeholder="password">
+                </mat-form-field>
+                <!-- <button class="button" type="submit" >submit</button> -->
+                <button class="button" routerLink="/home">Submit</button>
+
+            </form>
+            <img src="./../../assets/logos/BMW GROUP.png" class="bmw_logo">
+
+        </div>
+    </div>
+</div>

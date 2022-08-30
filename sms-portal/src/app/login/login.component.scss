@@ -1,0 +1,71 @@
+body {
+    background-image: url('../../assets/images/mfest.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    // background-color: red !important;
+}
+
+.login {
+    width: 100%;
+  
+    .login-container {
+        width: 400px;
+        height: 500px;
+        background: #ffffff;
+        box-shadow: 0px 2px 4px rgb(0 0 0 / 13%);
+        position: relative;
+        left: 50%;
+        right: 50%;
+        top: 50%;
+        bottom: 50%;
+        text-align: center;
+        align-content: center;
+    }
+  
+    .loginModal {
+      width: 100%;
+      position: relative;
+      margin: 0 auto;
+      text-align: center;
+      top: 25%;
+      right: 0;
+    }
+    .bmw_logo {
+      top: 150px;
+      position: relative;
+      margin: 0 auto;
+      left: 130px;
+    }
+  
+    // label {
+    //   display: block;
+    //   position: relative;
+    //   left: -45px;
+    //   margin-bottom: 10px;
+    //   margin-top: 10px;
+    //   text-transform: uppercase;
+    // }
+  
+    button.button {
+      position: relative;
+    //   left: -50px;
+    //   top: 10px;
+      background-color: #003b75;
+      border: none;
+      color: white;
+      padding: 13px 22px;
+      text-decoration: none;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 20px;
+    }
+  
+    input[type="text"],
+    input[type="password"] {
+      border-radius: 20px;
+      padding: 8px;
+      background-color: aliceblue;
+    }
+  }
+  
