@@ -69,7 +69,6 @@ export class BulkUploadComponent implements OnInit {
             if (event.type == HttpEventType.UploadProgress) {
               console.log('in progress');
             } else if (event instanceof HttpResponse) {
-              debugger;
               this.message = event.body.message;
               console.log(this.message);
               if (event.status == 200) {

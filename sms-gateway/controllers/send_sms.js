@@ -1,5 +1,5 @@
 const accountSid = 'AC5f7a34c940725f03533ac4de74cabd2c';
-const authToken = 'e2cafc59d4c91cb983e3d2e628d382cd';
+const authToken = '950c5e3315e8373f368a45c694fcfab9';
 const twilioClient = require('twilio')(accountSid, authToken);
 const uploadFile = require('../middelware/fileUpload');
 const redXlsxFile = require('read-excel-file/node');
