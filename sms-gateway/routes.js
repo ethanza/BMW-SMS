@@ -4,6 +4,6 @@ const upload = require('./middelware/fileUpload');
 const sendSMSController = require('./controllers/send_sms');
 
 // router.get('/sendSMS', sendSMSController.test);
-router.post('/api/test', upload.single('file'), sendSMSController.test2);
+router.post('/api/test', upload.single('file'), sendSMSController.upload);
 
 module.exports = router;

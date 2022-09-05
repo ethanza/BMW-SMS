@@ -14,7 +14,7 @@ const excelFilter = (req, file, cb) => {
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __basedir + "/public/resources/uploads/");
+    cb(null, __basedir + "./public/resources/uploads");
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
@@ -25,7 +25,7 @@ let memory = multer.memoryStorage({
   Buffer: (req, cb) => {
     cb(null, '');
   }
-})
+});
 
 let uploadFile = multer({ storage: memory, fileFilter: excelFilter });
 
