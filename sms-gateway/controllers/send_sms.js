@@ -1,5 +1,4 @@
-const accountSid = 'AC5f7a34c940725f03533ac4de74cabd2c';
-const authToken = '950c5e3315e8373f368a45c694fcfab9';
+const { accountSid, authToken, number } = require('../config/config')
 const twilioClient = require('twilio')(accountSid, authToken);
 // const readXlsxFile = require('read-excel-file/node');
 const xlsx = require('xlsx');
@@ -14,7 +13,7 @@ const upload = async (req, res) => {
         }
         // readFile(req.file.filename);
         const file = req.file.buffer;
-       await readFile2(file);
+        await createMessage(file);
     } catch (error) {
 
     }
@@ -52,7 +51,7 @@ const readFile = (filename) => {
 
 }
 
-const readFile2 = async(file) => {
+const createMessage = async (file) => {
 
     const workbook = xlsx.read(file);
     const sheet_name_list = workbook.SheetNames;
@@ -62,25 +61,26 @@ const readFile2 = async(file) => {
     let contact_number = '';
     let time = '';
 
-    if(xlData){
-        for(let i = 2; i < xlData.length; i++){
+    if (xlData) {
+        for (let i = 2; i < xlData.length; i++) {
             service_adviser = xlData[i].__EMPTY_10;
             contact_number = xlData[i].__EMPTY_2;
             time = xlData[i].__EMPTY_9;
 
             messageObject = {
-                from: '14155238886',
+                from: number,
                 to: contact_number,
                 body: `Dear Valued Client, thank you for booking your vehicle in at SMG Century City. Your vehicle is booked for tomorrow at ${time} with ${service_adviser}. To adhere to the current social distancing measures, we request that you please remain in your vehicle upon arrival until one of our SMG representatives assists you. Please ensure all valuables have been removed from your vehicle as well as all discarded masks and tissues prior to check-in and kindly note we are a cashless site. Our Shuttle Service is operational should you not be able to make arrangements for your own transportation. We look forward to welcoming you to the dealership. Stay Safe, Stay Healthy, Stay Sanitized`
             };
             console.log(messageObject);
             messages.push(messageObject);
-            sendMessage(messageObject);
+            console.log(twilioClient);
+            sendMessageViaSMS(messageObject);
         }
     }
 }
 
-const sendMessage = (message) => {
+const sendMessageViaWhatsapp = (message) => {
     console.log(message);
     twilioClient.messages
         .create({
@@ -91,6 +91,19 @@ const sendMessage = (message) => {
         .then(message => {
             res.status(200).send({
                 message: res.json(JSON.stringify(message)),
+            });
+        });
+}
+
+const sendMessageViaSMS = (message) => {
+    twilioClient.messages
+        .create({
+            body: message.body,
+            to: `+${message.to}`,
+            from: number
+        }).then(message => {
+            res.status(200).send({
+                message: res.json(JSON.stringify(message))
             });
         });
 }

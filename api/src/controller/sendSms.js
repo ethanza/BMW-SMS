@@ -1,5 +1,5 @@
-const accountSid = 'AC5f7a34c940725f03533ac4de74cabd2c';
-const authToken = '950c5e3315e8373f368a45c694fcfab9';
+const accountSid = 'AC4b5c5a5c1fb2e4a9677edaa7a662d300';
+const authToken = '359e3c5b5b6ffbeaf6625ac2bf74acbf';
 const twilioClient = require('twilio')(accountSid, authToken);
 // const readXlsxFile = require('read-excel-file/node');
 const xlsx = require('xlsx');
@@ -18,7 +18,7 @@ const upload = async (req, res) => {
     } catch (error) {
 
     }
-    return res.status(200).send({ message: 'sucessfully sent messages!', messages });
+    return res.status(200).send({ message: 'sucessfully sent messages!', messages});
 }
 
 const readFile = (filename) => {
@@ -69,7 +69,7 @@ const readFile2 = async(file) => {
             time = xlData[i].__EMPTY_9;
 
             messageObject = {
-                from: '14155238886',
+                from: '12342353323',
                 to: contact_number,
                 body: `Dear Valued Client, thank you for booking your vehicle in at SMG Century City. Your vehicle is booked for tomorrow at ${time} with ${service_adviser}. To adhere to the current social distancing measures, we request that you please remain in your vehicle upon arrival until one of our SMG representatives assists you. Please ensure all valuables have been removed from your vehicle as well as all discarded masks and tissues prior to check-in and kindly note we are a cashless site. Our Shuttle Service is operational should you not be able to make arrangements for your own transportation. We look forward to welcoming you to the dealership. Stay Safe, Stay Healthy, Stay Sanitized`
             };
