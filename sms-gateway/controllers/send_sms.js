@@ -74,7 +74,6 @@ const createMessage = async (file) => {
             };
             console.log(messageObject);
             messages.push(messageObject);
-            console.log(twilioClient);
             sendMessageViaSMS(messageObject);
         }
     }
