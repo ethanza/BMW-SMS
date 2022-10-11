@@ -44,3 +44,4 @@ testem.log
 Thumbs.db
 
 /sms-gateway/config/*
+/data/*

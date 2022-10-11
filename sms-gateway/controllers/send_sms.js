@@ -85,7 +85,7 @@ const sendMessageViaWhatsapp = (message) => {
         .create({
             body: message.body,
             from: `whatsapp:+${message.from}`,
-            to: `whatsapp:+${message.to}`
+            to: `whatsapp:+27${message.to}`
         })
         .then(message => {
             res.status(200).send({
@@ -98,7 +98,7 @@ const sendMessageViaSMS = (message) => {
     twilioClient.messages
         .create({
             body: message.body,
-            to: `+${message.to}`,
+            to: `+27${message.to}`,
             from: number
         }).then(message => {
             res.status(200).send({
