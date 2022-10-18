@@ -65,7 +65,7 @@ const createMessage = async (file) => {
         for (let i = 2; i < xlData.length; i++) {
             service_adviser = xlData[i].__EMPTY_10;
             contact_number = xlData[i].__EMPTY_2;
-            time = xlData[i].__EMPTY_9;
+            time = formatTime(xlData[i].__EMPTY_9);
 
             messageObject = {
                 from: number,
@@ -74,7 +74,7 @@ const createMessage = async (file) => {
             };
             console.log(messageObject);
             messages.push(messageObject);
-            sendMessageViaSMS(messageObject);
+            // sendMessageViaSMS(messageObject);
         }
     }
 }
@@ -107,4 +107,22 @@ const sendMessageViaSMS = (message) => {
         });
 }
 
+const formatTime = (data) => {
+    try {
+        let timestamp = parseFloat(data);
+        if (isNaN(timestamp)) { return; }
+        let stringTime = timestamp.toString();
+        stringTime = stringTime.replace(',', ':');
+        stringTime = stringTime.replace('.', ':');
+
+        if (stringTime.substring(2).length > 0 && stringTime.substring(2).length < 2) {
+            stringTime = stringTime.substring(0, 2) + stringTime.substring(2) + '0';
+        }
+        console.log(stringTime);
+        debugger;
+    } catch (error) {
+
+    }
+
+}
 module.exports = { upload };
