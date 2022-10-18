@@ -74,7 +74,7 @@ const createMessage = async (file) => {
             };
             console.log(messageObject);
             messages.push(messageObject);
-            // sendMessageViaSMS(messageObject);
+            sendMessageViaSMS(messageObject);
 
            
         }
