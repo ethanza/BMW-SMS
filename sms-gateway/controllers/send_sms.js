@@ -70,11 +70,13 @@ const createMessage = async (file) => {
             messageObject = {
                 from: number,
                 to: contact_number,
-                body: `Dear Valued Client, thank you for booking your vehicle in at SMG Century City. Your vehicle is booked for tomorrow at ${time} with ${service_adviser}. To adhere to the current social distancing measures, we request that you please remain in your vehicle upon arrival until one of our SMG representatives assists you. Please ensure all valuables have been removed from your vehicle as well as all discarded masks and tissues prior to check-in and kindly note we are a cashless site. Our Shuttle Service is operational should you not be able to make arrangements for your own transportation. We look forward to welcoming you to the dealership. Stay Safe, Stay Healthy, Stay Sanitized`
+                body: ` Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for tomorrow at ${time}  with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`
             };
             console.log(messageObject);
             messages.push(messageObject);
             // sendMessageViaSMS(messageObject);
+
+           
         }
     }
 }
@@ -119,7 +121,7 @@ const formatTime = (data) => {
             stringTime = stringTime.substring(0, 2) + stringTime.substring(2) + '0';
         }
         console.log(stringTime);
-        debugger;
+        return stringTime;
     } catch (error) {
 
     }
