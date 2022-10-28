@@ -20,36 +20,36 @@ const upload = async (req, res) => {
     return res.status(200).send({ message: 'sucessfully sent messages!', messages });
 }
 
-const readFile = (filename) => {
+// const readFile = (filename) => {
 
-    let path = __basedir + 'public/resources/uploads/' + filename;
+//     let path = __basedir + 'public/resources/uploads/' + filename;
 
-    let service_adviser;
-    let contact_number;
-    let time;
-    let messageObject;
+//     let service_adviser;
+//     let contact_number;
+//     let time;
+//     let messageObject;
 
-    readXlsxFile(path).then((rows) => {
-        for (let index = 2; index < rows.length; index++) {
-            let entry = rows[index];
-            if (index === 2) {
-                // service_adviser = entry.findIndex(getServiceAdvisor());
-                // contact_number = entry.findIndex(getContactNumber());
-                // time = entry.findIndex(getTime());
-            } else {
-                messageObject = {
-                    from: '14155238886',
-                    to: `${entry[3]}`,
-                    body: `Dear Valued Client, thank you for booking your vehicle in at SMG Century City. Your vehicle is booked for Monday at ${entry[10]} with ${entry[11]}. To adhere to the current social distancing measures, we request that you please remain in your vehicle upon arrival until one of our SMG representatives assists you. Please ensure all valuables have been removed from your vehicle as well as all discarded masks and tissues prior to check-in and kindly note we are a cashless site. Our Shuttle Service is operational should you not be able to make arrangements for your own transportation. We look forward to welcoming you to the dealership. Stay Safe, Stay Healthy, Stay Sanitized`
-                };
-                sendMessage(messageObject);
-                // sendScheduledMessage(messageObject);
-            }
-        }
-    })
-    // sendMessage(messageObject);
+//     readXlsxFile(path).then((rows) => {
+//         for (let index = 2; index < rows.length; index++) {
+//             let entry = rows[index];
+//             if (index === 2) {
+//                 // service_adviser = entry.findIndex(getServiceAdvisor());
+//                 // contact_number = entry.findIndex(getContactNumber());
+//                 // time = entry.findIndex(getTime());
+//             } else {
+//                 messageObject = {
+//                     from: '14155238886',
+//                     to: `${entry[3]}`,
+//                     body: `Dear Valued Client, thank you for booking your vehicle in at SMG Century City. Your vehicle is booked for Monday at ${entry[10]} with ${entry[11]}. To adhere to the current social distancing measures, we request that you please remain in your vehicle upon arrival until one of our SMG representatives assists you. Please ensure all valuables have been removed from your vehicle as well as all discarded masks and tissues prior to check-in and kindly note we are a cashless site. Our Shuttle Service is operational should you not be able to make arrangements for your own transportation. We look forward to welcoming you to the dealership. Stay Safe, Stay Healthy, Stay Sanitized`
+//                 };
+//                 sendMessage(messageObject);
+//                 // sendScheduledMessage(messageObject);
+//             }
+//         }
+//     })
+//     // sendMessage(messageObject);
 
-}
+// }
 
 const createMessage = async (file) => {
 
@@ -70,7 +70,7 @@ const createMessage = async (file) => {
             messageObject = {
                 from: number,
                 to: contact_number,
-                body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for tomorrow at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`
+                body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for Monday at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`
             };
             console.log(messageObject);
             messages.push(messageObject);
