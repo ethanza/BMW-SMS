@@ -33,6 +33,7 @@ export class BulkUploadComponent implements OnInit {
   myForm: any = new FormGroup({
     file: new FormControl('', [Validators.required]),
     fileSource: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required])
   });
 
   public selectedFiles?: FileList;

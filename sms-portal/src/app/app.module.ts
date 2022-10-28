@@ -18,6 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { SuccessComponent } from './success/success.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -39,12 +41,15 @@ import { SuccessComponent } from './success/success.component';
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'fill' },
     },
+    MatDatepickerModule
   ],
   exports: [
     MatFormFieldModule,
@@ -52,7 +57,9 @@ import { SuccessComponent } from './success/success.component';
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
