@@ -1,24 +1,28 @@
-const { accountSid, authToken, number } = require('../config/config')
-const twilioClient = require('twilio')(accountSid, authToken);
+const { accountSid, authToken, number } = require('../config/config');
+
+const twilioClient = require("twilio")(accountSid, authToken);
 // const readXlsxFile = require('read-excel-file/node');
-const xlsx = require('xlsx');
-const { default: readXlsxFile } = require('read-excel-file/node');
+const xlsx = require("xlsx");
+const { default: readXlsxFile } = require("read-excel-file/node");
 const messages = [];
+// const sendScheduledMessageTime = new Date();
+const today = new Date();
+let tomorrow = new Date();
 
 const upload = async (req, res) => {
-    try {
-        // uploadFile(req, res);
-        if (req?.file?.buffer == undefined) {
-            return res.status(400).send({ message: 'Please upload file!' });
-        }
-        // readFile(req.file.filename);
-        const file = req.file.buffer;
-        await createMessage(file);
-    } catch (error) {
-
+  try {
+    // uploadFile(req, res);
+    if (req?.file?.buffer == undefined) {
+      return res.status(400).send({ message: "Please upload file!" });
     }
-    return res.status(200).send({ message: 'sucessfully sent messages!', messages });
-}
+    // readFile(req.file.filename);
+    const file = req.file.buffer;
+    await createMessage(file);
+  } catch (error) {}
+  return res
+    .status(200)
+    .send({ message: "sucessfully sent messages!", messages });
+};
 
 // const readFile = (filename) => {
 
@@ -52,76 +56,105 @@ const upload = async (req, res) => {
 // }
 
 const createMessage = async (file) => {
+  const workbook = xlsx.read(file);
+  const sheet_name_list = workbook.SheetNames;
+  const xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+  calculateTomorrow();
+//   sendScheduledMessageTime = tomorrow;
 
-    const workbook = xlsx.read(file);
-    const sheet_name_list = workbook.SheetNames;
-    const xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+  let service_adviser = "";
+  let contact_number = "";
+  let time = "";
 
-    let service_adviser = '';
-    let contact_number = '';
-    let time = '';
+  if (xlData) {
+    for (let i = 2; i < xlData.length; i++) {
+      service_adviser = xlData[i].__EMPTY_10;
+      contact_number = xlData[i].__EMPTY_2;
+      time = formatTime(xlData[i].__EMPTY_9);
 
-    if (xlData) {
-        for (let i = 2; i < xlData.length; i++) {
-            service_adviser = xlData[i].__EMPTY_10;
-            contact_number = xlData[i].__EMPTY_2;
-            time = formatTime(xlData[i].__EMPTY_9);
-
-            messageObject = {
-                from: number,
-                to: contact_number,
-                body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for tomorrow at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`
-            };
-            console.log(messageObject);
-            messages.push(messageObject);
-            sendMessageViaWhatsapp(messageObject);
-        }
+      messageObject = {
+        from: number,
+        to: contact_number,
+        body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for tomorrow at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`,
+      };
+      console.log(messageObject);
+      messages.push(messageObject);
+      // sendMessageViaWhatsapp(messageObject);
+       sendScheduledMessageViaWhatsapp(messageObject);
     }
-}
+  }
+};
 
 const sendMessageViaWhatsapp = (message) => {
-    twilioClient.messages
-        .create({
-            body: message.body,
-            from: `whatsapp:+${message.from}`,
-            to: `whatsapp:+27${message.to}`
-        })
-        .then(message => {
-            res.status(200).send({
-                message: res.json(JSON.stringify(message)),
-            });
-        });
-}
+  twilioClient.messages
+    .create({
+      body: message.body,
+      from: `whatsapp:+${message.from}`,
+      to: `whatsapp:+27${message.to}`,
+    })
+    .then((message) => {
+      res.status(200).send({
+        message: res.json(JSON.stringify(message)),
+      });
+    });
+};
 
 const sendMessageViaSMS = (message) => {
-    twilioClient.messages
-        .create({
-            body: message.body,
-            to: `+27${message.to}`,
-            from: number
-        }).then(message => {
-            res.status(200).send({
-                message: res.json(JSON.stringify(message))
-            });
-        });
-}
+  twilioClient.messages
+    .create({
+      body: message.body,
+      to: `+27${message.to}`,
+      from: number,
+    })
+    .then((message) => {
+      res.status(200).send({
+        message: res.json(JSON.stringify(message)),
+      });
+    });
+};
 
-const formatTime = (data) => {
+const sendScheduledMessageViaWhatsapp = (message) => {
     try {
-        let timestamp = parseFloat(data);
-        if (isNaN(timestamp)) { return; }
-        let stringTime = timestamp.toString();
-        stringTime = stringTime.replace(',', ':');
-        stringTime = stringTime.replace('.', ':');
-
-        if (stringTime.substring(2).length > 0 && stringTime.substring(2).length < 2) {
-            stringTime = stringTime.substring(0, 2) + stringTime.substring(2) + '0';
-        }
-        console.log(stringTime);
-        return stringTime;
+        twilioClient.messages
+        .create({
+          body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for tomorrow at 9 with x. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`,
+          messagingServiceSid: 'MGba88b9e788a7a4d255f389c177bc89c8',
+          to: `+27${message.to}`,
+          sendAt: tomorrow.toUTCString(),
+          scheduleType: 'fixed'
+        })
+        .then(x => console.log(x));
     } catch (error) {
-
+        debugger;
+        console.log(error);
     }
 
-}
+};
+
+const formatTime = (data) => {
+  try {
+    let timestamp = parseFloat(data);
+    if (isNaN(timestamp)) {
+      return;
+    }
+    let stringTime = timestamp.toString();
+    stringTime = stringTime.replace(",", ":");
+    stringTime = stringTime.replace(".", ":");
+
+    if (
+      stringTime.substring(2).length > 0 &&
+      stringTime.substring(2).length < 2
+    ) {
+      stringTime = stringTime.substring(0, 2) + stringTime.substring(2) + "0";
+    }
+    console.log(stringTime);
+    return stringTime;
+  } catch (error) {}
+};
+
+const calculateTomorrow = () => {
+  try {
+     tomorrow.setMinutes(today.getMinutes() + 15);
+  } catch (error) {}
+};
 module.exports = { upload };
