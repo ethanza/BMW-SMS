@@ -70,7 +70,7 @@ const createMessage = async (file) => {
             messageObject = {
                 from: number,
                 to: contact_number,
-                body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for Monday at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`
+                body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for Tomorrow at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`
             };
             console.log(messageObject);
             messages.push(messageObject);
