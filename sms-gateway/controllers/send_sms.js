@@ -1,6 +1,5 @@
 const { accountSid, authToken, number } = require('../config/config');
-
-const twilioClient = require("twilio")(accountSid, authToken);
+const twilioClient = require('twilio')(accountSid, authToken);
 // const readXlsxFile = require('read-excel-file/node');
 const xlsx = require("xlsx");
 const { default: readXlsxFile } = require("read-excel-file/node");
@@ -56,34 +55,38 @@ const upload = async (req, res) => {
 // }
 
 const createMessage = async (file) => {
-  const workbook = xlsx.read(file);
-  const sheet_name_list = workbook.SheetNames;
-  const xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-  calculateTomorrow();
-//   sendScheduledMessageTime = tomorrow;
 
-  let service_adviser = "";
-  let contact_number = "";
-  let time = "";
+    const workbook = xlsx.read(file);
+    const sheet_name_list = workbook.SheetNames;
+    const xlData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
-  if (xlData) {
-    for (let i = 2; i < xlData.length; i++) {
-      service_adviser = xlData[i].__EMPTY_10;
-      contact_number = xlData[i].__EMPTY_2;
-      time = formatTime(xlData[i].__EMPTY_9);
+    let service_adviser = '';
+    let contact_number = '';
+    let time = '';
 
-      messageObject = {
-        from: number,
-        to: contact_number,
-        body: `Dear Valued Client, thank you for choosing BMW Century City as your preferred servicing dealer. A friendly reminder that your vehicle is booked for tomorrow at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our shuttle service is operational from 8am daily. We look forward to welcoming you`,
-      };
-      console.log(messageObject);
-      messages.push(messageObject);
-      // sendMessageViaWhatsapp(messageObject);
-       sendScheduledMessageViaWhatsapp(messageObject);
+    if (xlData) {
+        for (let i = 2; i < xlData.length; i++) {
+            service_adviser = xlData[i].__EMPTY_10;
+            contact_number = xlData[i].__EMPTY_2;
+            time = formatTime(xlData[i].__EMPTY_9);
+            // messageObject = {
+            //     from: number,
+            //     to: contact_number,
+            //     body:`Dear Valued Client, this message serves to confirm your booking for Monday at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`
+            // };
+            messageObject = {
+                from: number,
+                to: contact_number,
+                body:`Dear Valued Client, this message serves to confirm your booking at ${time} tomorrow with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`
+            };
+            // console.log(messageObject);
+            messages.push(messageObject);
+            sendScheduledMessageViaWhatsapp(messageObject);
+            // sendMessageViaWhatsapp(messageObject);
+        }
     }
   }
-};
+
 
 const sendMessageViaWhatsapp = (message) => {
   twilioClient.messages
