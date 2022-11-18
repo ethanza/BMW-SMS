@@ -45,7 +45,7 @@ const createMessage = async (file) => {
       //   body: `Dear Valued Client, this message serves to confirm your booking at ${time} tomorrow with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`,
       // };
       messages.push(messageObject);
-      sendMessageViaWhatsapp(messageObject);
+      // sendMessageViaWhatsapp(messageObject);
       sendScheduledMessageViaWhatsapp({
         service_adviser,
         contact_number,
