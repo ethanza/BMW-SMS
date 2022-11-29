@@ -5,6 +5,7 @@ const xlsx = require("xlsx");
 const { default: readXlsxFile } = require("read-excel-file/node");
 const messages = [];
 
+
 const upload = async (req, res) => {
   try {
     // uploadFile(req, res);
@@ -14,7 +15,7 @@ const upload = async (req, res) => {
     // readFile(req.file.filename);
     const file = req.file.buffer;
     await createMessage(file);
-  } catch (error) {}
+  } catch (error) { }
   return res
     .status(200)
     .send({ message: "sucessfully sent messages!", messages });
@@ -34,23 +35,23 @@ const createMessage = async (file) => {
       service_adviser = xlData[i].__EMPTY_10;
       contact_number = xlData[i].__EMPTY_2;
       time = formatTime(xlData[i].__EMPTY_9);
+      // messageObject = {
+      //   from: number,
+      //   to: contact_number,
+      //   body: `Dear Valued Client, this message serves to confirm your booking for Monday at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`,
+      // };
        messageObject = {
-         from: number,
+          from: number,
          to: contact_number,
-         body: `Dear Valued Client, this message serves to confirm your booking for Monday at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`,
-       };
-     messageObject = {
-        from: number,
-       to: contact_number,
-       body: `Dear Valued Client, this message serves to confirm your booking at ${time} tomorrow with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`,
-      };
+         body: `Dear Valued Client, this message serves to confirm your booking at ${time} tomorrow with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`,
+        };
       messages.push(messageObject);
-    //  sendMessageViaWhatsapp(messageObject);
-  //    sendScheduledMessageViaWhatsapp({
-   //     service_adviser,
-  //      contact_number,
-  //      time,
-   //   });
+      sendMessageViaWhatsapp(messageObject);
+      sendScheduledMessageViaWhatsapp({
+        service_adviser,
+        contact_number,
+        time,
+      });
     }
   }
 };
@@ -128,7 +129,7 @@ const formatTime = (data) => {
       stringTime = stringTime.substring(0, 2) + stringTime.substring(2) + "0";
     }
     return stringTime;
-  } catch (error) {}
+  } catch (error) { }
 };
 
 module.exports = { upload };
