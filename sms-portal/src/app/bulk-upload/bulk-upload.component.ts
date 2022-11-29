@@ -59,6 +59,8 @@ export class BulkUploadComponent implements OnInit {
 
   public upload(): void {
     this.progress = 0;
+    // this.fileuploaded(this.selectedFiles);
+    // return;
 
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
@@ -69,7 +71,7 @@ export class BulkUploadComponent implements OnInit {
             if (event.type == HttpEventType.UploadProgress) {
               console.log('in progress');
             } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
+              this.message = event?.body?.message || event?.status;
               console.log(this.message);
               if (event.status == 200) {
                 this.router.navigate(['/success']);
@@ -86,4 +88,33 @@ export class BulkUploadComponent implements OnInit {
     }
     this.selectedFiles = undefined;
   }
+
+  // public fileuploaded(files: any) {
+  //   if (files && files.length > 0) {
+  //     let file = files.item(0);
+  //     console.log(file.name);
+  //     console.log(file.size);
+  //     console.log(file.type);
+  //     let reader: FileReader = new FileReader();
+  //     // reader.readAsText(file);
+  //     let arrayBuffer: any = [];
+  //     reader.onload = (e) => {
+  //       arrayBuffer = reader.result;
+  //       var data = new Uint8Array();
+  //       var arr = new Array();
+  //       for (var i = 0; i != data.length; i++) {
+  //         arr[i] = String.fromCharCode(data[i]);
+  //         console.log('arr', arr);
+  //       }
+  //       var bstr = arr.join('');
+  //       var workbook = XLSX.read(bstr, { type: 'binary' });
+  //       var first_sheet_name = workbook.SheetNames[0];
+  //       var worksheet = workbook.Sheets[first_sheet_name];
+  //       console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
+  //       // let csv: string = reader.result as string;
+  //       // console.log(csv);
+  //     };
+  //     reader.readAsArrayBuffer(files);
+  //   }
+  // }
 }

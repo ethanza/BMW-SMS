@@ -45,3 +45,5 @@ Thumbs.db
 
 /sms-gateway/config/*
 /data/*
+
+/twilio-api/sms-gateway/node_modules
