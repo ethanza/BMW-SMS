@@ -22,6 +22,7 @@ import {
 import { Observable } from 'rxjs';
 import { FileUploadService } from '../services/file-upload.service';
 import { Router } from '@angular/router';
+import * as XLSX from 'ts-xlsx';
 
 @Component({
   selector: 'app-bulk-upload',
@@ -40,6 +41,8 @@ export class BulkUploadComponent implements OnInit {
   public progress = 0;
   public message = '';
   public fileInfos?: Observable<any>;
+  public arrayBuffer: any;
+  public fileUploaded?: File;
 
   constructor(
     private http: HttpClient,
@@ -55,6 +58,7 @@ export class BulkUploadComponent implements OnInit {
 
   public selectFile(event: any) {
     this.selectedFiles = event.target.files;
+    this.fileUploaded = event.target.files[0];
   }
 
   public upload(): void {
@@ -87,6 +91,28 @@ export class BulkUploadComponent implements OnInit {
       }
     }
     this.selectedFiles = undefined;
+  }
+  public fileUploader() {
+    if (this.selectedFiles) {
+      const file:any = this.fileUploaded;
+      debugger;
+
+      let fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        this.arrayBuffer = fileReader.result;
+        var data = new Uint8Array(this.arrayBuffer);
+        var arr = new Array();
+        for (var i = 0; i != data.length; i++) {
+          arr[i] = String.fromCharCode(data[i]);
+        }
+        var bstr = arr.join('');
+        var workbook = XLSX.read(bstr, { type: 'binary' });
+        var first_sheet_name = workbook.SheetNames[0];
+        var worksheet = workbook.Sheets[first_sheet_name];
+        console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
+      };
+      fileReader.readAsArrayBuffer(file);
+    }
   }
 
   // public fileuploaded(files: any) {

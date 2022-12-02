@@ -14,7 +14,7 @@ const upload = async (req, res) => {
     // readFile(req.file.filename);
     const file = req.file.buffer;
     await createMessage(file);
-  } catch (error) {}
+  } catch (error) { }
   return res
     .status(200)
     .send({ message: "sucessfully sent messages!", messages });
@@ -125,7 +125,21 @@ const formatTime = (data) => {
       stringTime = stringTime.substring(0, 2) + stringTime.substring(2) + "0";
     }
     return stringTime;
-  } catch (error) {}
+  } catch (error) { }
 };
 
-module.exports = { upload };
+const cancel = () => {
+  const ids = [];
+  for (let index = 0; index < ids.length; index++) {
+
+    twilioClient.messages(ids[index])
+      .update({ status: 'canceled' })
+      .then((message) => {
+        console.log(message);
+        res.status(200).send({
+          message: res.json(JSON.stringify(message)),
+        });
+      });
+  }
+}
+module.exports = { upload, cancel };
