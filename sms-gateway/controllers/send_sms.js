@@ -35,16 +35,16 @@ const createMessage = async (file) => {
       service_adviser = xlData[i].__EMPTY_10;
       contact_number = xlData[i].__EMPTY_2;
       time = formatTime(xlData[i].__EMPTY_9);
-      // messageObject = {
-      //   from: number,
-      //   to: contact_number,
-      //   body: `Dear Valued Client, this message serves to confirm your booking for Monday at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. We kindly request that your vehicle be sufficiently fuelled for testing purposes. BMW Century City look forward to welcoming you and thank you for your continued support.`,
-      // };
-       messageObject = {
-          from: number,
-         to: contact_number,
-         body: `Dear Valued Client, this message serves to confirm your booking at ${time} tomorrow with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. We kindly request that your vehicle be sufficiently fuelled for testing purposes. BMW Century City look forward to welcoming you and thank you for your continued support.`,
-        };
+      messageObject = {
+        from: number,
+        to: contact_number,
+        body: `Dear Valued Client, this message serves to confirm your booking for Monday at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. We kindly request that your vehicle be sufficiently fuelled for testing purposes. BMW Century City look forward to welcoming you and thank you for your continued support.`,
+      };
+      //  messageObject = {
+      //     from: number,
+      //    to: contact_number,
+      //    body: `Dear Valued Client, this message serves to confirm your booking at ${time} tomorrow with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. We kindly request that your vehicle be sufficiently fuelled for testing purposes. BMW Century City look forward to welcoming you and thank you for your continued support.`,
+      //   };
       messages.push(messageObject);
       sendMessageViaWhatsapp(messageObject);
       sendScheduledMessageViaWhatsapp({
@@ -93,13 +93,13 @@ async function sendScheduledMessageViaWhatsapp(message) {
     const tomorrow = new Date().getDate() + 1;
     const monday = new Date().getDate() + 3;
 
-    const sendWhen = new Date(Date.UTC(year, month, tomorrow, 4, 0, 0));
-    // const sendWhen = new Date(Date.UTC(year, month, monday, 4, 0, 0));
+    // const sendWhen = new Date(Date.UTC(year, month, tomorrow, 4, 0, 0));
+    const sendWhen = new Date(Date.UTC(year, month, monday, 4, 0, 0));
 
     const messageSend = await twilioClient.messages
       .create({
         from: "MGba88b9e788a7a4d255f389c177bc89c8",
-        body: `Dear Valued Client, a friendly reminder of your booking today at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. We kindly request that your vehicle is sufficiently fuelled for testing purposes.`,
+        body: `Dear Valued Client, a friendly reminder of your booking today at ${time} with ${service_adviser}. Kindly ensure all valuables have been removed prior to check-in and note that we are a cashless site. Our complimentary shuttle service has been scaled down, operating various routes within the immediate area and surrounds. Please note the shuttle service commences at 8am sharp. All clients requiring urgent transportation are recommended to make use of alternate transport methods such as Uber to avoid unnecessary disappointments. We kindly request that your vehicle is sufficiently fuelled for testing purposes. BMW Century City look forward to welcoming you and thank you for your continued support. Warm Regards,`,
         sendAt: sendWhen.toISOString(),
         scheduleType: "fixed",
         to: `whatsapp:+27${contact_number}`,
