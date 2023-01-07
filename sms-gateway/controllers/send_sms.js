@@ -28,8 +28,8 @@ const createMessage = async (file) => {
   let service_adviser = "";
   let contact_number = "";
   let time = "";
-  // let day = "tomorrow";
-  let day = "Monday";
+  let day = "tomorrow";
+  // let day = "Monday";
 
   if (xlData) {
     for (let i = 2; i < xlData.length; i++) {
@@ -89,8 +89,8 @@ async function sendScheduledMessageViaWhatsapp(message) {
     // const tomorrow = new Date().getDate() + 1;
     const monday = new Date().getDate() + 3;
 
-    // const sendWhen = new Date(Date.UTC(year, month, tomorrow, 4, 0, 0));
-     const sendWhen = new Date(Date.UTC(year, month, monday, 4, 0, 0));
+     const sendWhen = new Date(Date.UTC(year, month, tomorrow, 4, 0, 0));
+     // const sendWhen = new Date(Date.UTC(year, month, monday, 4, 0, 0));
 
     const messageSend = await twilioClient.messages
       .create({
