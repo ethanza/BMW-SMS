@@ -86,8 +86,8 @@ async function sendScheduledMessageViaWhatsapp(message) {
 
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
-    // const tomorrow = new Date().getDate() + 1;
-    const monday = new Date().getDate() + 3;
+    const tomorrow = new Date().getDate() + 1;
+    // const monday = new Date().getDate() + 3;
 
      const sendWhen = new Date(Date.UTC(year, month, tomorrow, 4, 0, 0));
      // const sendWhen = new Date(Date.UTC(year, month, monday, 4, 0, 0));
